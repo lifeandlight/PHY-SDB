@@ -1,7 +1,6 @@
 # PHY-SDB
 PHY-SDB: A Dual-Physics-Guided Deep Learning Framework for Hyperspectral Satellite-Derived Bathymetry
 
-
 This is the complete code that can be run directly, provided that the user has prepared all the inputs, 
 including 
  hyperspectral imagery, 
@@ -10,4 +9,5 @@ IOP data,
 and model parameters, to run the code. Detailed processing steps can be found in the paper.
 
 EnMAP：https://www.enmap.org/
-IceSat-2: https://search.earthdata.nasa.gov/search?q=ATL03
+
+ICESat-2: https://search.earthdata.nasa.gov/search?q=ATL03
