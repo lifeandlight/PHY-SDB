@@ -41,7 +41,6 @@ class Logger(object):
         if self.log:
             self.log.close()
 
-
 class EarlyStopping:
     def __init__(self, patience=25, delta=0):
         self.patience = patience  
@@ -63,7 +62,6 @@ class EarlyStopping:
             self.best_score = score
             self.counter = 0
         
-
 class DNNDepthNet(nn.Module):
     def __init__(self, input_dim, hidden_dims=[128, 64], activation='relu'):
         super(DNNDepthNet, self).__init__()
@@ -89,7 +87,6 @@ class DNNDepthNet(nn.Module):
 
     def forward(self, x):
         return self.model(x)
-
 
 def optimize_mlp_hyperparams(X_train, Y_train, X_val, Y_val, input_dim):
     def objective(trial):
@@ -167,15 +164,12 @@ class CNN1DDepthNet(nn.Module):
 
         self.fc = nn.Linear(flattened_size, 1)
 
-
     def forward(self, x):
         x = x.unsqueeze(1)
         x = self.conv_layers(x)
         x = x.flatten(start_dim=1)
 
         return self.fc(x)
-
-
 
 def optimize_cnn1d_hyperparams(X_train, Y_train, X_val, Y_val, input_dim):
     def objective(trial):
@@ -211,7 +205,7 @@ def optimize_cnn1d_hyperparams(X_train, Y_train, X_val, Y_val, input_dim):
         with torch.no_grad():
             val_pred = model(X_val_tensor)
             val_loss = criterion(val_pred, Y_val_tensor).item()
-
+            
         return val_loss
 
     sampler = TPESampler(seed=42) 
@@ -220,7 +214,6 @@ def optimize_cnn1d_hyperparams(X_train, Y_train, X_val, Y_val, input_dim):
 
     best_params = study.best_params
     return best_params
-
 
 class LossFunction(nn.Module):
     def __init__(self, loss_type='mse', lambda_phy=1, lambda_phy_base=1.0, lambda_reg=1e-4, epsilon=1e-6):
@@ -236,7 +229,6 @@ class LossFunction(nn.Module):
             return loss_data
         elif self.loss_type == 'mse+phy':  
             return loss_data + self.lambda_phy * loss_phy.clamp(min=1e-8, max=1e8)
-
 
 def physical_loss(pred_depth, X_train, Y_train, scaler): 
     blue_band = 13
@@ -322,7 +314,7 @@ def train_model(X_train, Y_train, X_test, Y_test,
     loss_fn = LossFunction(loss_type=loss_type)
     model = model.to(device)
 
-    print(f"--- 模型: {model_type}, 损失函数: {loss_type} ---")
+    print(f"--- {model_type},  {loss_type} ---")
 
     if loss_type == 'mse':
         optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=1e-4)
@@ -482,8 +474,7 @@ def repeat_train_and_evaluate(
     df_metrics = pd.DataFrame(metrics_list)
     df_mean = df_metrics.groupby('model').mean().reset_index()
     df_mean['run'] = 'mean'
-
-    print("模型结构:")
+    
     print(model)
     print("-" * 30)
 
@@ -611,7 +602,6 @@ def predict_image(scaler, model, image_path, image_data, save_dir, model_type, l
 
     print(f"[INFO] Depth prediction saved to {save_path}")
     return depth_map
-
 
 def plot_metrics_summary(df_total, output_path):
     df_plot = df_total[df_total['run'] != 'mean'].copy()
@@ -756,7 +746,7 @@ def main():
     })
     results_df.to_csv(param_path, index=False)
 
-    loss_types = ['mse','mse+phy']  
+    loss_types = ['mse', 'mse+phy']  
     n_repeats = 10
     all_metrics= [] 
 
@@ -820,5 +810,6 @@ def main():
 if __name__ == '__main__':
 
     main()
+
 
 
