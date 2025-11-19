@@ -8,5 +8,3 @@ including
 water depth data, 
 IOP data, 
 and model parameters, to run the code. Detailed processing steps can be found in the paper.
-
-《PHY-SDB: A Dual-Physics-Guided Deep Learning Framework for Hyperspectral Satellite-Derived Bathymetry》
