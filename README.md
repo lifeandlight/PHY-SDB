@@ -8,3 +8,6 @@ including
 water depth data, 
 IOP data, 
 and model parameters, to run the code. Detailed processing steps can be found in the paper.
+
+EnMAP：https://www.enmap.org/
+IceSat-2: https://search.earthdata.nasa.gov/search?q=ATL03
